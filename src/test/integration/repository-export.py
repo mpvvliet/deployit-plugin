@@ -15,11 +15,12 @@ def verifyNoValidationErrorsInRepoObjectsEntity(repositoryObjects):
        verifyNoValidationErrors(repoObject)
 
 def saveRepositoryObjectsEntity(repoObjects):
-	print "Saving repository objects"
-	repositoryObjects = repository.create(repoObjects)
-	verifyNoValidationErrorsInRepoObjectsEntity(repositoryObjects)
-	print "Saved repository objects"
-	return repositoryObjects
+    print "Saving repository objects"
+    objectsToSave = [i for i in repoObjects if not repository.exists(i.id) ]
+    repositoryObjects = repository.create(objectsToSave)
+    verifyNoValidationErrorsInRepoObjectsEntity(repositoryObjects)
+    print "Saved repository objects"
+    return repositoryObjects
 
 def save(listOfCis):
 	return saveRepositoryObjectsEntity(listOfCis)
